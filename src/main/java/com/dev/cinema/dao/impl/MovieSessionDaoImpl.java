@@ -6,7 +6,7 @@ import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,18 +16,17 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime startOfDay = date.atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("FROM MovieSession"
                     + " WHERE movie_id =: movieId"
                     + " AND showTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
             query.setParameter("movieId", movieId);
-            query.setParameter("startOfDay", startOfDay);
-            query.setParameter("endOfDay", endOfDay);
+            query.setParameter("startOfDay", date.atStartOfDay());
+            query.setParameter("endOfDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcesingException("Can't get available sessions", e);
+            throw new DataProcesingException("Can't get available sessions with id" + movieId
+                    + " at " + date, e);
         }
     }
 
