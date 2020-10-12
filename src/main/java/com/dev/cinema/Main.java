@@ -32,7 +32,6 @@ public class Main {
         movie.setTitle("Fast and Furious");
         movieService.add(movie);
 
-
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("IMAX");
