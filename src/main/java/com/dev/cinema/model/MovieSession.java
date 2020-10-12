@@ -44,11 +44,11 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
-    public void setLocalDateTime(LocalDateTime showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 
