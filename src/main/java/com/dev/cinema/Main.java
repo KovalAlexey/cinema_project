@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
-
     static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
     static final CinemaHallService cinemaHallService
