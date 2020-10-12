@@ -16,17 +16,17 @@ import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
-    static final MovieService movieService
+    private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
-    static final CinemaHallService cinemaHallService
+    private static final CinemaHallService cinemaHallService
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    static final MovieSessionService sessionService
+    private static final MovieSessionService sessionService
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-    static final UserService userService
+    private static final UserService userService
             = (UserService) injector.getInstance(UserService.class);
-    static final ShoppingCartService shoppingCartService
+    private static final ShoppingCartService shoppingCartService
             = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-    static final OrderService orderService
+    private static final OrderService orderService
             = (OrderService) injector.getInstance(OrderService.class);
 
     public static void main(String[] args) throws AuthenticationException {

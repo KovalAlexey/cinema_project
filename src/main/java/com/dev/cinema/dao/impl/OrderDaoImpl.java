@@ -7,6 +7,7 @@ import com.dev.cinema.model.Order;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -43,7 +44,9 @@ public class OrderDaoImpl implements OrderDao {
                     + "JOIN FETCH o.tickets "
                     + "WHERE o.user =: user", Order.class);
             query.setParameter("user", user);
-            return query.getResultList();
+            return query.getResultList().stream()
+                    .distinct()
+                    .collect(Collectors.toList());
         }
     }
 }
