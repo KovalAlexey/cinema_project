@@ -3,7 +3,6 @@ package com.dev.cinema.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +19,7 @@ public class Order {
     @OneToMany
     private List<Ticket> tickets;
     private LocalDateTime orderDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
 
     public Long getId() {
