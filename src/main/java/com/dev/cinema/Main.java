@@ -9,6 +9,7 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDateTime;
@@ -25,6 +26,8 @@ public class Main {
             = (UserService) injector.getInstance(UserService.class);
     static final ShoppingCartService shoppingCartService
             = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+    static final OrderService orderService
+            = (OrderService) injector.getInstance(OrderService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
@@ -50,6 +53,10 @@ public class Main {
         shoppingCartService.registerNewShoppingCart(user);
         shoppingCartService.addSession(session, user);
         System.out.println(shoppingCartService.getByUser(user));
+
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+        System.out.println(shoppingCartService.getByUser(user));
+        System.out.println(orderService.getOrderHistory(user));
     }
 }
 
