@@ -9,22 +9,28 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
+import org.apache.log4j.Logger;
+
 import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
-    static final MovieService movieService
+    private static final Logger logger = Logger.getRootLogger();
+    private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
-    static final CinemaHallService cinemaHallService
+    private static final CinemaHallService cinemaHallService
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    static final MovieSessionService sessionService
+    private static final MovieSessionService sessionService
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-    static final UserService userService
+    private static final UserService userService
             = (UserService) injector.getInstance(UserService.class);
-    static final ShoppingCartService shoppingCartService
+    private static final ShoppingCartService shoppingCartService
             = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+    private static final OrderService orderService
+            = (OrderService) injector.getInstance(OrderService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
@@ -49,7 +55,11 @@ public class Main {
 
         shoppingCartService.registerNewShoppingCart(user);
         shoppingCartService.addSession(session, user);
-        System.out.println(shoppingCartService.getByUser(user));
+        logger.info(shoppingCartService.getByUser(user));
+
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+        logger.info(shoppingCartService.getByUser(user));
+        logger.info(orderService.getOrderHistory(user));
     }
 }
 
