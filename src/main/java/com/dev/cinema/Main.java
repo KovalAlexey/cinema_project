@@ -12,13 +12,10 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-import org.apache.log4j.Logger;
-
 import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
-    private static final Logger logger = Logger.getRootLogger();
     private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
     private static final CinemaHallService cinemaHallService
@@ -55,11 +52,11 @@ public class Main {
 
         shoppingCartService.registerNewShoppingCart(user);
         shoppingCartService.addSession(session, user);
-        logger.info(shoppingCartService.getByUser(user));
+        System.out.println(shoppingCartService.getByUser(user));
 
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
-        logger.info(shoppingCartService.getByUser(user));
-        logger.info(orderService.getOrderHistory(user));
+        System.out.println(shoppingCartService.getByUser(user));
+        System.out.println(orderService.getOrderHistory(user));
     }
 }
 
