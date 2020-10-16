@@ -54,8 +54,10 @@ public class Main {
         user.setEmail("test@test.com");
         user.setPassword("1234");
         userService.add(user);
+
+        authService.register(user.getEmail(), user.getPassword());
         try {
-            authService.login("test@test.com", "1234");
+            authService.login(user.getEmail(), user.getPassword());
             logger.info("A user logged in");
         } catch (AuthenticationException e) {
             logger.warn("Login failed with exception ", e);
