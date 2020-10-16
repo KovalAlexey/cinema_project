@@ -50,12 +50,7 @@ public class Main {
         session.setShowTime(LocalDateTime.now());
         sessionService.add(session);
 
-        User user = new User();
-        user.setEmail("test@test.com");
-        user.setPassword("1234");
-        userService.add(user);
-
-        authService.register(user.getEmail(), user.getPassword());
+        User user = authService.register("test@test.com", "1234");
         try {
             authService.login(user.getEmail(), user.getPassword());
             logger.info("A user logged in");
@@ -63,7 +58,6 @@ public class Main {
             logger.warn("Login failed with exception ", e);
         }
 
-        shoppingCartService.registerNewShoppingCart(user);
         shoppingCartService.addSession(session, user);
         logger.info("Trying to get shopping cart for user " + shoppingCartService.getByUser(user));
 
