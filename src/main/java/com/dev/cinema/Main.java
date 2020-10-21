@@ -6,6 +6,7 @@ import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.User;
+import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
@@ -13,9 +14,11 @@ import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDateTime;
+import org.apache.log4j.Logger;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
+    private static final Logger logger = Logger.getLogger(Main.class);
     private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
     private static final CinemaHallService cinemaHallService
@@ -28,6 +31,8 @@ public class Main {
             = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
     private static final OrderService orderService
             = (OrderService) injector.getInstance(OrderService.class);
+    private static final AuthenticationService authService
+            = (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
@@ -45,18 +50,19 @@ public class Main {
         session.setShowTime(LocalDateTime.now());
         sessionService.add(session);
 
-        User user = new User();
-        user.setEmail("test@test.com");
-        user.setPassword("1234");
-        userService.add(user);
+        User user = authService.register("test@test.com", "1234");
+        try {
+            authService.login(user.getEmail(), user.getPassword());
+            logger.info("A user logged in");
+        } catch (AuthenticationException e) {
+            logger.warn("Login failed with exception ", e);
+        }
 
-        shoppingCartService.registerNewShoppingCart(user);
         shoppingCartService.addSession(session, user);
-        System.out.println(shoppingCartService.getByUser(user));
+        logger.info("Trying to get shopping cart for user " + shoppingCartService.getByUser(user));
 
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
-        System.out.println(shoppingCartService.getByUser(user));
-        System.out.println(orderService.getOrderHistory(user));
+        logger.info("Trying to get all user's tickets " + shoppingCartService.getByUser(user));
+        logger.info("Trying to get order history " + orderService.getOrderHistory(user));
     }
 }
-
