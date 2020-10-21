@@ -2,18 +2,23 @@ package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.CinemaHallDao;
 import com.dev.cinema.exceptions.DataProcesingException;
-import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.CinemaHall;
-import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
     private static final Logger log = Logger.getLogger(CinemaHallDaoImpl.class);
+    private final SessionFactory sessionFactory;
+
+    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -21,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         Session session = null;
         log.info("Adding new cinema hall " + cinemaHall);
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -42,7 +47,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         log.info("Try to get all cinema hall list");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(CinemaHall.class);
             criteriaQuery.from(CinemaHall.class);

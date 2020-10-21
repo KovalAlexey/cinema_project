@@ -1,7 +1,7 @@
 package com.dev.cinema;
 
+import com.dev.cinema.config.AppConfig;
 import com.dev.cinema.exceptions.AuthenticationException;
-import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
@@ -12,27 +12,26 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
-import com.dev.cinema.service.UserService;
 import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
-    private static Injector injector = Injector.getInstance("com.dev.cinema");
     private static final Logger logger = Logger.getLogger(Main.class);
-    private static final MovieService movieService
-            = (MovieService) injector.getInstance(MovieService.class);
-    private static final CinemaHallService cinemaHallService
-            = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    private static final MovieSessionService sessionService
-            = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-    private static final UserService userService
-            = (UserService) injector.getInstance(UserService.class);
-    private static final ShoppingCartService shoppingCartService
-            = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-    private static final OrderService orderService
-            = (OrderService) injector.getInstance(OrderService.class);
-    private static final AuthenticationService authService
-            = (AuthenticationService) injector.getInstance(AuthenticationService.class);
+    private static final AnnotationConfigApplicationContext context =
+            new AnnotationConfigApplicationContext(AppConfig.class);
+    private static final MovieService movieService =
+            context.getBean(MovieService.class);
+    private static final MovieSessionService sessionService =
+            context.getBean(MovieSessionService.class);
+    private static final CinemaHallService cinemaHallService =
+            context.getBean(CinemaHallService.class);
+    private static final OrderService orderService =
+            context.getBean(OrderService.class);
+    private static final ShoppingCartService shoppingCartService =
+            context.getBean(ShoppingCartService.class);
+    private static final AuthenticationService authService =
+            context.getBean(AuthenticationService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
