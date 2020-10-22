@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/movies")
 public class MovieController {
     private final MovieService movieService;
     private final MovieMapper movieMapper;
@@ -21,14 +21,14 @@ public class MovieController {
         this.movieMapper = movieMapper;
     }
 
-    @GetMapping("/movies")
+    @GetMapping
     public List<MovieResponseDto> getAllMovies() {
         return movieService.getAll().stream()
                 .map(movieMapper::toMovieDto)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/add-movie")
+    @PostMapping
     public void addMovie(@RequestBody MovieRequestDto movieRequestDto) {
         movieService.add(movieMapper.toMovieEntity(movieRequestDto));
     }
