@@ -7,9 +7,9 @@ import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-@Controller
+@Component
 public class MovieSessionMapper {
     private final CinemaHallService cinemaHallService;
     private final MovieService movieService;
