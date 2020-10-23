@@ -26,8 +26,8 @@ public class MovieSessionController {
 
     @GetMapping("/available")
     public List<MovieSessionResponseDto> getAllSessions(@RequestParam Long id,
-                                                        @RequestParam String showTime) {
-        return movieSessionService.findAvailableSessions(id, LocalDate.parse(showTime)).stream()
+                                                        @RequestParam LocalDate showTime) {
+        return movieSessionService.findAvailableSessions(id, showTime).stream()
                 .map(sessionMapper::toMovieSessionResponseDto)
                 .collect(Collectors.toList());
     }

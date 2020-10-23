@@ -5,6 +5,7 @@ public class MovieSessionResponseDto {
     private String showTime;
     private String movieTitle;
     private Long cinemaHallId;
+    private Long movieId;
 
     public Long getMovieSessionId() {
         return movieSessionId;
@@ -36,5 +37,13 @@ public class MovieSessionResponseDto {
 
     public void setShowTime(String showTime) {
         this.showTime = showTime;
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 }
