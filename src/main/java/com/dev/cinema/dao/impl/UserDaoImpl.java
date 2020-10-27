@@ -56,4 +56,13 @@ public class UserDaoImpl implements UserDao {
             throw new DataProcesingException("Can't get user by email " + email, e);
         }
     }
+
+    @Override
+    public User getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, id);
+        } catch (Exception e) {
+            throw new DataProcesingException("Can't get user with id " + id, e);
+        }
+    }
 }
