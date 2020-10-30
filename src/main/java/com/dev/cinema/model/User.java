@@ -19,16 +19,6 @@ public class User {
     @Column(length = 50)
     private String email;
     private String password;
-    @Column(length = 16)
-    private byte[] salt;
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
-    }
 
     public Long getId() {
         return id;
