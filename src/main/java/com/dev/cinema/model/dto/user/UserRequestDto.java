@@ -3,6 +3,7 @@ package com.dev.cinema.model.dto.user;
 import com.dev.cinema.annotation.CustomEmailConstraint;
 import com.dev.cinema.annotation.FieldsValueMatch;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @FieldsValueMatch(
         field = "password",
@@ -12,9 +13,9 @@ import javax.validation.constraints.Min;
 public class UserRequestDto {
     @CustomEmailConstraint
     private String email;
-    @Min(4)
+    @Size(min = 4)
     private String password;
-    @Min(4)
+    @Size(min = 4)
     private String repeatPassword;
 
     public String getRepeatPassword() {

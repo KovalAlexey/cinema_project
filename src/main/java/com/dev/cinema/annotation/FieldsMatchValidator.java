@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapperImpl;
 
-public class FieldsMatchValidator implements ConstraintValidator<FieldsValueMatch, UserRequestDto> {
+public class FieldsMatchValidator implements ConstraintValidator<FieldsValueMatch, Object> {
     private String field;
     private String fieldMatch;
 
@@ -15,10 +15,10 @@ public class FieldsMatchValidator implements ConstraintValidator<FieldsValueMatc
         this.fieldMatch = constraint.fieldMatch();
     }
 
-    public boolean isValid(UserRequestDto userRequestDto, ConstraintValidatorContext context) {
-        Object fieldValue = new BeanWrapperImpl(userRequestDto)
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+        Object fieldValue = new BeanWrapperImpl(value)
                 .getPropertyValue(field);
-        Object fieldMatchValue = new BeanWrapperImpl(userRequestDto)
+        Object fieldMatchValue = new BeanWrapperImpl(value)
                 .getPropertyValue(fieldMatch);
         return Objects.equals(fieldValue, fieldMatchValue);
     }
