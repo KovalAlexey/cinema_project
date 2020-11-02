@@ -2,7 +2,6 @@ package com.dev.cinema.model.dto.user;
 
 import com.dev.cinema.annotation.CustomEmailConstraint;
 import com.dev.cinema.annotation.FieldsValueMatch;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @FieldsValueMatch(

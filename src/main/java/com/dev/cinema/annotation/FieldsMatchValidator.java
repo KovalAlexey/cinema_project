@@ -1,6 +1,5 @@
 package com.dev.cinema.annotation;
 
-import com.dev.cinema.model.dto.user.UserRequestDto;
 import java.util.Objects;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
