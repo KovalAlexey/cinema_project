@@ -48,7 +48,7 @@ public class RoleDaoImpl implements RoleDao {
         try (Session session = sessionFactory.openSession()) {
             Query<Role> query = session.createQuery(
                     "FROM Role WHERE roleName = :roleName", Role.class)
-                    .setParameter("roleName", roleName);
+                    .setParameter("roleName", Role.RoleName.valueOf(roleName));
             return query.getSingleResult();
         } catch (Exception e) {
             throw new DataProcesingException("Can't get role by name " + roleName, e);
