@@ -1,6 +1,5 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dao.impl.CinemaHallDaoImpl;
 import com.dev.cinema.model.Role;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.RoleService;
@@ -13,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InjectData {
-    private static final String ADMIN = "ADMIN";
-    private static final String USER = "USER";
-    private static final Logger log = Logger.getLogger(CinemaHallDaoImpl.class);
+    private static final String ADMIN_ROLE_NAME = "ADMIN";
+    private static final String USER_ROLE_NAME = "USER";
+    private static final Logger log = Logger.getLogger(InjectData.class);
     private final UserService userService;
     private final ShoppingCartService shoppingCartService;
     private final RoleService roleService;
@@ -29,10 +28,10 @@ public class InjectData {
     }
 
     @PostConstruct
-    public void addAdmin() {
+    public void addAdminAndRoles() {
         log.info("Injecting all roles...");
-        Role userRole = Role.of(USER);
-        Role adminRole = Role.of(ADMIN);
+        Role userRole = Role.of(USER_ROLE_NAME);
+        Role adminRole = Role.of(ADMIN_ROLE_NAME);
         roleService.add(userRole);
         roleService.add(adminRole);
         log.info("Roles added successfully!");
